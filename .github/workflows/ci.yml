@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [develop]
+  push:
+    branches: [develop]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: CheckOut files
+        uses: actions/checkout@v1
+      - name: Setup Node 
+        uses: actions/setup-node@v1
+        with:
+          node_version: "16.x"
+      - run: npm ci
+      - run: npm run format:check
+      - run: npm test -- --coverage
+        env:
+          CI: true
+      - name: Build Project
+        if: github.event_name == 'push'
+        run: npm run build
+      - name: Staging
+        if: github.event_name == 'push'
+        run: npx surge --project ./build --domain nebulous-room.surge.sh
+        env:
+          SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
+          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
+      
+        
