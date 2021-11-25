@@ -14,7 +14,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node_version: "16.x"
-      - run: npm CI
+      - run: npm ci
       - run: npm run format:check
       - run: npm test -- --coverage
         env:
