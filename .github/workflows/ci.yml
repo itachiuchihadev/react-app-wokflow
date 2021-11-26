@@ -41,6 +41,11 @@ jobs:
         with:
           name: build
           path: build
+      - name: Semantic Release
+        if: github.event_name == 'push' && github.ref = 'refs/head/master'
+        run: npx semantic-release
+        env:
+          GITHUB_TOKEN : ${{ secrets.GTIHUB_TOKEN }}
       - name: Staging
         if: github.event_name == 'push'
         run: npx surge --project ./build --domain nebulous-room.surge.sh
