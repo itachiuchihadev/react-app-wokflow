@@ -10,7 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      GITHUB_TOKEN : ${{ secrets.GTIHUB_TOKEN }}
+      GITHUB_TOKEN : ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: CheckOut files
         uses: actions/checkout@v1
