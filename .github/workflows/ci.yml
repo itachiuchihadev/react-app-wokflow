@@ -44,6 +44,7 @@ jobs:
           name: build
           path: build
       - name: Zip Assests
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         run: |
           zip -r build.zip ./build
           zip -r coverage.zip ./coverage
