@@ -9,6 +9,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN : ${{ secrets.GTIHUB_TOKEN }}
     steps:
       - name: CheckOut files
         uses: actions/checkout@v1
@@ -44,8 +46,6 @@ jobs:
       - name: Semantic Release
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         run: npx semantic-release 
-        env:
-          GITHUB_TOKEN : ${{ secrets.GTIHUB_TOKEN }}
       - name: Staging
         if: github.event_name == 'push'
         run: npx surge --project ./build --domain nebulous-room.surge.sh
